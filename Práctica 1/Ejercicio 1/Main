@@ -1,0 +1,14 @@
+package practica1;
+
+public class ejercicio1 {
+
+	public static void main(String[] args) {	
+		int a= 3;
+		int b= 10;
+		
+		clase1.imprimirA(a,b);
+		clase1.imprimirB(a,b);
+		clase1.imprimirC(a,b);
+	}
+  
+}
