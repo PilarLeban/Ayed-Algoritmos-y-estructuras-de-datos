@@ -1,1 +1,310 @@
+1. C.
+
+2. Un árbol binario es lleno cuando cada nodo tiene 0 o 2 hijos. (Si tiene uno solo no es lleno).
+Un árbol binario completo es cuando todos los niveles están completos excepto el último, que se llena
+de izquierda a derecha. (Si tiene hijos en el último nivel y están a la derecha no es completo, no puede haber huecos a la izquierda).
+No todo árbol completo es lleno porque un árbol completo puede tener nodos con un solo hijo.
+No todo árbol lleno es completo porque ya si hay un hueco en la izquierda pero hay hijos a la derecha no cumple.
+
+3. Si el último nodo en postorden es el mismo que el último nodo en inorden, podemos concluir que el subárbol derecho
+de T es vacío. En postorden el último es la raíz y el último inorden sería el nodo más derecho, si son el mismo nodo la raíz es el nodo más 
+derecho entonces no existe subárbol derecho.
+
+4. La función traverse(a) imprime el dato del nodo actual, si tiene HI llama recursivamente a traverse(hI), si tiene HD también y vuelve a 
+imprimir el dato del nodo actual antes de finalizar la función. 
+El resultado final es: C A B B A E D D F F E C.
+
+5. Al evaluar una expresión postfija utilizamos una pila. Recorremos la expresión de izquierda a derecha, si encontramos un número, lo metemos
+en la pila, si encontramos un operador, sacamos los dos últimos npumeros, aplicamos la operación y metemos el resultado de nuevo en la pila.
+El resultado final de la expresión es 78, la correcta es la A).
+
+6. Realizamos un recorrido inorden. Descomponemos el árbol desde las hojas hacia la raíz.
+Subárbol izquierdo inferior: la operación entre los operandos a y b es una resta. Resultado: (a - b).
+Subárbol izquierdo superior: el resultado anterior, es el hijo izquierdo del operador división /, y c es u HD. Resultado: ((a - b) / c).
+Subárbol derecho: los operandosd y e están unidos por una multiplicación *. Resultado: (d * e).
+Operación raíz: conectamos la parte izquierda con la derecha con el operador suma +, la raíz. Resultado final: (((a - b) / c) + (d * e)).
+Por lo tanto la respuesta correcta es la D), coincide exactamente con la estructura representada. 
+
+7. Un árbol con solo la raíz tiene altura 0, si hablamos de un árbol con altura 4, este tiene 5 niveles (0, 1, 2, 3, 4).
+La fórmula para el número de nodos de un árbol binario lleno de altura h es: N = 2^(h+1) - 1
+y si applicamos la fórmula para altura 4: N = 2^(4+1) - 1 = 2^5 - 1 = 32 - 1 = 31.
+Y los nodos para llenar hasta altura 3: 2^(3+1) - 1 = 15. Más 1 nodo en el nivel 4 para que la altura sea efectivamente 4 = 16.
+Por lo tanto la respuesta correcta es la E), el mínimo es 16.
+
+8. 6, 5 son operandos, creamos dos nodos hoja y los ponemos en la pila. 
+* es un operador, sacamos los dos últimos nodos, el primero que sale, 5, es el HD y el segundo, 6, es el HI. 
+Subárbol: (6 * 5), pila: [(6 * 5)].
+7, 3 son operandos, creamos dos nodos hoja y los ponemos en la pila. Pila: [(6 * 5), 7, 3].
+- es un operador, sacamos el 3 = HD y el 7 = HI. Subárbol: (7 - 3), pila: [(6 * 5), (7 - 3)].
+4, 8 son operandos, creamos dos nodos hoja y los ponemos en la pila. Pila: [(6 * 5), (7 - 3), 4, 8].
+* es un operador, sacamos el 8, HD, y el 4, HI. Subárbol: (4 * 8), pila: [(6 * 5), (7 - 3), (4 * 8)].
++ es un operador, sacamos (4 * 8), HD, y (7 - 3), HI. Subárbol: ((7 - 3) + (4 * 8)), Pila: [(6 * 5), ((7 - 3) + (4 * 8))].
++ es un operador, sacamos la expresión de la derecha y la de la izquierda y las unimos: ((6 * 5) + ((7 - 3) + (4 * 8))).
+          +
+       /     \
+      * +
+     / \    /   \
+    6   5  -     *
+          / \   / \
+         7   3 4   8
+
+9. Operador Principal (Raíz): La multiplicación * divide la expresión en: izquierdo ( A + ( B * C ) ) y: derecho ( D - E ).
+Subárbol Izquierdo: Dentro de ( A + ( B * C ) ), el operador principal es la suma +. Su hijo izquierdo es el operando A. Su hijo derecho 
+es el resultado del paréntesis ( B * C ).
+Subárbol del Subárbol Izquierdo: En ( B * C ), el operador es * con hijos B (izq) y C (der).
+Subárbol Derecho: En ( D - E ), el operador es - con hijos D (izq) y E (der).
+
+            * (Raíz)
+           /       \
+          +         -
+         / \       / \
+        A   * D   E
+           / \
+          B   C
+
+10. f, d, c, b: Son operandos. Los ponemos en la pila.
+-: Sacamos b y c. Formamos el subárbol (b - c).
+*: Sacamos el subárbol (b - c) y el operando d. Formamos ((b - c) * d).
+/: Sacamos el subárbol anterior y el operando f. Formamos (((b - c) * d) / f).
+e, a: Son operandos. Los ponemos en la pila.
++: Sacamos a y e. Formamos el subárbol (a + e).
++: Finalmente, unimos: (a + e) y (((b - c) * d) / f).
+El árbol resultante se ve así (donde la raíz es el nivel 0):
+            + (Raíz)     (Nivel 0)
+           /       \
+          +         /    (Nivel 1)
+         / \       / \
+        a   e     *   f  (Nivel 2)
+                 / \
+                -   d    (Nivel 3)
+               / \
+              b   c      (Nivel 4)
+La profundidad de un nodo es la longitud del camino desde la raíz hasta ese nodo.
+De la raíz + al / (1 salto). Del / al * (2 saltos). Del * al d (3 saltos)
+Por lo tanto, la respuesta correcta es la C), la profundidad del nodo d es 3.
+
+11. 
+A --> Apilar	[A]
+B	--> Apilar	[A, B]
+C	--> Apilar	[A, B, C]
+*	--> Operar	[A, (*BC)]
+D	--> Apilar	[A, (*BC), D]
+-	--> Operar	[A, (-*BCD)]
+E	--> Apilar	[A, (-*BCD), E]
+F	--> Apilar	[A, (-*BCD), E, F]
+/	--> Operar	[A, (-*BCD), (/EF)]
+G	--> Apilar	[A, (-*BCD), (/EF), G]
+/	--> Operar	[A, (-*BCD), (//EFG)]
+-	--> Operar	[A, (- -*BCD //EFG)]
+*	--> Operar	[ A - -BCD //EFG] --> * A - - * B C D / / E F G
+
+12. Para encontrar el árbol que tiene recorrido inorden BCAD y pre orden ABCD
+tenemos que reconstruirlo usando la lógico de los recorridos o verificar cada opción.
+El preorden nos indica siempre cuál es la raíz primero y el inorden nos dice qué nodos están a la izq y cuales a la der de la raíz.
+Preorden (ABCD): La primera letra es A, por lo tanto, A es la raíz.
+Inorden (BCAD): Buscamos la raíz A. Lo que está a su izquierda (BC) forma el subárbol izquierdo. Lo que está a su derecha (D) forma 
+el subárbol derecho.
+
+Árbol A:
+Preorden: A, B, C, D --> Sí. 
+Inorden: B, A, D, C --> No.
+
+Árbol B: 
+Preorden: A, C, B, D --> No.
+
+Árbol C:
+Preorden: A, B, C, D --> Sí. 
+Inorden: Buscamos la raíz A. A la izquierda no hay nada. --> No, el inorden empieza con B.
+
+Árbol D: 
+Preorden: Raíz (A) --> Subárbol izquierdo (B --> C) --> Subárbol derecho (D). Resultado: ABCD. --> Sí.
+Inorden: Subárbol izquierdo (B y C en inorden es B, C) --> Raíz (A) --> Subárbol derecho (D). Resultado: BCAD. --> Sí.
+
+Por lo tanto, el árbol que cumple con las condiciones es el D.
+
+13. Preorden (2, 5, 3, 9, 7, 1, 6, 4, 8): El primer elemento siempre es la raíz = 2.
+Inorden (9, 3, 7, 5, 1, 2, 6, 8, 4): Localizamos la raíz (2). Los elementos a su izquierda forman el subárbol izquierdo y los de 
+su derecha el subárbol derecho. Izquierda de 2: 9, 3, 7, 5, 1, derecha de 2: 6, 8, 4.
+
+Subárbol izquierdo (9, 3, 7, 5, 1). 
+Miramos el siguiente elemento en el preorden después del 2, que es el 5. El 5 es la raíz de este subárbol.
+En el inorden, alrededor del 5: 9, 3, 7 están a su izquierda y 1 está a su derecha.
+
+Subárbol de (9, 3, 7).
+El siguiente en el preorden es 3. El 3 es la raíz.
+En el inorden, alrededor del 3: 9 está a su izquierda y 7  a su derecha. Como son nodos únicos, terminamos esta rama.
+
+Subárbol derecho (6, 8, 4).
+Buscamos en el preorden cuál aparece primero después de terminar con la rama izquierda. 
+Tras el 1, sigue el 6. El 6 es la raíz. En el inorden, a la izquierda del 6 no hay nada. A su derecha están 8, 4.
+
+Subárbol de (8, 4).
+En el preorden es 4 = raíz.
+En el inorden, el 8 está a la izquierda del 4.
+
+            2 (Raíz)
+           /     \
+          5       6
+         / \       \
+        3   1       4
+       / \         /
+      9   7       8
+
+14. En un árbol binario lleno se cumple siempre que los nodos internos = hojas - 1.
+Si llamamos L a la cantidad de hojas y I a la cantidad de nodos internos, entonces I = L - 1.
+El número total de nodos es: nodos internos + hojas. --> N = I + L.
+Reemplazamos I = L - 1 --> N = (L - 1) + L. --> N = 2L - 1
+Ejemplo, si L = 4 --> N = 2.4 - 1 = 7
+Árbol posible: 
+        A
+      /   \
+     B     C
+    / \   / \
+   D   E F   G  --> Tiene 4 hojas --> D, E, F, G. Y 7 nodos en total.
+
+15.
+a. 
+i. A es la raíz del árbol.
+ii. A es padre de B, C y D.
+iii. E y F son hermanos, puesto que ambos son hijos de B.
+iv. E, J, K, L, C, P, Q, H, N y O son las hojas del árbol. 
+v. El camino desde A a J es único, lo conforman los nodos A, B, F, J y es de largo 3.
+vi. D/A/G/M es ancestro de P, y por lo tanto P es descendiente de D.
+vii. L no es descendiente de C, puesto que no existe un camino desde C a L.
+viii. La profundidad/nivel de C es 1, de F es 2 y de P/Q es 4.
+ix. La altura de C es 0, de F es 1, y de D es 3.
+x. La altura del árbol es 4 (largo del camino entre la raíz A y las hojas más lejanas, P o Q).
+
+b.
+i. a) Preorden 
+Empezamos en A.
+Bajamos por B: B, E.
+Seguimos con los hijos de F: F, J, K, L.
+Pasamos al siguiente hijo de A: C.
+Pasamos al hijo D: D.
+Bajamos por G: G, M, P, Q.
+Seguimos con H.
+Seguimos con I y sus hijos: I, N, O.
+Resultado: A B E F J K L C D G M P Q H I N O
+
+b) Inorden
+Primero el subárbol de E: E.
+Raíz del bloque: B.
+Subárbol de F: J, F, K, L.
+Raíz principal: A.
+Siguiente hijo: C.
+Subárbol de D: empezamos por G --> P, M, Q, G.
+Raíz del bloque: D.
+Siguiente: H.
+Subárbol de I: N, I, O.
+Resultado: E B J F K L A C P M Q G D H N I O
+
+c) Postorden
+Hijos de B: E. Luego hijos de F: J, K, L, luego F.
+Raíz del bloque: B.
+Hijo central: C.
+Hijos de D:
+De G: hijos de M (P, Q), luego M, luego G.
+Luego H.
+De I: hijos N, O, luego I.
+Raíz del bloque: D.
+Raíz final: A.
+Resultado: E J K L F B C P Q M G H N O I D A
+
+ii.
+Nivel 0: A
+Nivel 1: B, C, D
+Nivel 2: E, F, G, H, I
+Nivel 3: J, K, L, M, N, O
+Nivel 4: P, Q
+Resultado: A B C D E F G H I J K L M N O P Q
+
+16. 
+Número mínimo de nodos:
+Para que un árbol tenga una altura h, debe existir al menos un camino que llegue hasta ese nivel. 
+El escenario con menos nodos posibles es aquel donde el árbol es lo más "delgado" posible (una estructura lineal en cada nivel hasta llegar al fondo).
+Raíz: 1 nodo. Cada nivel hasta h: al menos un nodo para mantener la altura. Total: N = h + 1.
+
+Número máximo de nodos: 
+El máximo se alcanza cuando el árbol está totalmente "saturado", es decir, cada nodo interno tiene exactamente k hijos y todos los niveles están 
+llenos hasta la altura h. Esto forma una suma geométrica: 
+Nivel 0: 1 nodo (k^0).
+Nivel 1: k nodos (k^1).
+Nivel 2: k^2 nodos.
+...
+Nivel h: k^h nodos.
+Entonces N = (k^(h + 1) - 1)/ (k - 1)
+
+17. El recorrido inorden para árbol binario se define como hijo izquierdo --> raíz --> hijo derecho.
+En árbol general, como pueden tener muchos hijos no existe solo izquierda y derecha, entonces:
+se recorren la mitad de los hijos, luego la raíz, luego la otra mitad.
+Si un nodo tiene 4 hijos --> A B C D --> el inorden sería A B --> raíz --> C D.
+Por lo tanto la respuesta correcta es la A) Primero la mitad de los subárboles hijos, luego la raíz y luego los restantes subárboles hijos.
+
+18. La profundidad de un nodo indica cuántos niveles abajo está desde la raíz o cuántas aristas hay desde la raíz hasta ese nodo.
+En un árbol general, entre la raíz y cualquier nodo existe un único camino, ya que un árbol no tiene ciclos.
+        A
+      / | \
+     B  C  D
+        |
+        E
+En ese árbol la profundidad de A es 0, ya que es la raíz.
+La profundidad de C es 1 ya que el camino es: A --> C.
+La profundidad de E es 2 ya que el camino es: A --> C --> E.
+Por lo tanto la respuesta correcta es la A) La longitud del único camino que existe entre la raíz y el nodo n1.
+
+19. 
+a. Si un árbol general lleno tiene grado 4 y un total de 21 nodos, que sea lleno signfica que cada nodo interno tiene exactamente 4 hijos (grado 4).
+En un árbol general el número total de nodos hasta altura h es: N = 1 + k + k^2 + k^3 + ... + k^h.
+Con grado 4: N = 1 + 4 + 4^2 + 4^3 + ... + 4^h.
+Si h = 0 --> 1
+Si h = 1 --> 1 + 4 = 5
+Si h = 2 --> 1 + 4 + 16 = 21
+1 + 4 + 4^2 = 21 coincide exactamente.
+Por lo tanto la respuesta correcta es la A) La altura del árbol es 2.
+
+b. Utilicé la fórmula de total de nodos de un árbol general lleno, reemplazando N por 21 y k por 4.
+De ambos lados de la igualdad nos queda 21 = 21.
+
+20. En un árbol general completo, de grado 3, altura 4 la cantidad mínima de nodos la calculamos así: 
+Primero obtenemos los nodos hasta el nivel anterior, como el grado es 3:
+Nivel 0 --> 1, nivel 2 --> 3, nivel 2 --> 9, nivel 3 --> 27.
+Sumamos hasta altura 3: 1 + 3 + 8 + 27 --> es lo mismo que 1 + 3 + 3^2 + 3^3
+Ambos resultados dan 40. 
+Entonces, agregamos el mínimo en nivel 4, como la altura es 4, debe existir al menos un nodo en ese nivel, sumando 1 a lo obtenido:
+40 + 1 = 41 --> La cantidad mínima es 41. Respuesta correcta B).
+
+21. 
+a. Si un árbol general lleno tiene grado 5, cada nodo interno tiene exactamente 5 hijos, y se sabe que tiene 125 hojas.
+La relación que teníamos entre hojas e internos era que en un árbol general lleno de grado k, siempre se cumple: L = (k - 1)I + 1. --> L = hojas, I = nodos internos, k = grado.
+Si reemplazamos los datos obtenemos:
+L = 125, k = 5. --> 125 = (5 - 1)I + 1 --> 125 = 4I + 1 --> 124 = 4I --> I = 31.
+Por lo tanto la cantidad de nodos internos es 31 y la respuesta correcta es la A).
+
+b. Utilicé la fórmula de árboles generales llenos, es decir, aplicando la relación entre hojas e internos en un árbol general lleno de grado 5,
+luego resolvimos reemplazando los datos obtenidos anteriormente.
+
+22. Los datos que tenemos del árbol general es que es completo, con grado 4 y altura 3. 
+Altura 3 sabemos que significa niveles --> nivel 0, nivel 1, nivel 2, nivel 3.
+El máximo de nodos ocurre cuando todos los niveles están completamente llenos. 
+Nivel 0 --> 1.
+Nivel 1 --> 4.
+Nivel 2 --> 16
+Nivel 3 --> 64.
+Sumando todo, obtenemos 1 + 4 + 16 + 64 = 85 --> = 1 + 4 + 4^2 + 4^3 = 85. Máximo = 85.
+
+El mínimo, como es completo, todos los niveles anteriores al último deben estar llenos. 
+Hasta el nivel 2: 1 + 4 + 16 = 21 --> 1 + 4 + 4^2 = 21.
+Pero la altura es 3, entinces debe haber al menos un nodo en nivel 3. --> 21 + 1 = 22. Mínimo = 22.
+
+Por lo tanto la respuesta correcta es la B) entre 22 y 85.
+
+
+
+
+
+
+
+
+
 
